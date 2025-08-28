@@ -4,16 +4,17 @@ import { Text, Button } from 'theme-ui'
 
 export default {
   title: 'Modal',
+  component: Modal,
 }
 
 export const Basic = () => {
   const [open, setOpen] = useState(true)
   return (
-    <>
+    <div>
       <Button onClick={() => setOpen(true)}>open</Button>
       <Modal open={open} onClose={() => setOpen(false)}>
         {({ onClose }) => (
-          <>
+          <div>
             <ModalTitle>
               <Text
                 sx={{
@@ -32,17 +33,17 @@ export const Basic = () => {
                 OK
               </Button>
             </ModalFooter>
-          </>
+          </div>
         )}
       </Modal>
-    </>
+    </div>
   )
 }
 
 export const CustomAnimation = () => {
   const [open, setOpen] = useState(true)
   return (
-    <>
+    <div>
       <Button onClick={() => setOpen(true)}>open</Button>
       <Modal
         open={open}
@@ -75,7 +76,7 @@ export const CustomAnimation = () => {
         }}
       >
         {({ onClose }) => (
-          <>
+          <div>
             <ModalTitle>
               <Text
                 sx={{
@@ -94,21 +95,21 @@ export const CustomAnimation = () => {
                 OK
               </Button>
             </ModalFooter>
-          </>
+          </div>
         )}
       </Modal>
-    </>
+    </div>
   )
 }
 
 export const Scrolling = () => {
   const [open, setOpen] = useState(true)
   return (
-    <>
+    <div>
       <Button onClick={() => setOpen(true)}>open</Button>
       <Modal open={open} onClose={() => setOpen(false)}>
         {({ onClose }) => (
-          <>
+          <div>
             <ModalTitle>
               <Text
                 sx={{
@@ -172,21 +173,21 @@ export const Scrolling = () => {
                 OK
               </Button>
             </ModalFooter>
-          </>
+          </div>
         )}
       </Modal>
-    </>
+    </div>
   )
 }
 
 export const ESCTurnedOff = () => {
   const [open, setOpen] = useState(true)
   return (
-    <>
+    <div>
       <Button onClick={() => setOpen(true)}>open</Button>
       <Modal open={open} allowEscKey={false} onClose={() => setOpen(false)}>
         {({ onClose }) => (
-          <>
+          <div>
             <ModalTitle>
               <Text
                 sx={{
@@ -205,9 +206,9 @@ export const ESCTurnedOff = () => {
                 OK
               </Button>
             </ModalFooter>
-          </>
+          </div>
         )}
       </Modal>
-    </>
+    </div>
   )
 }

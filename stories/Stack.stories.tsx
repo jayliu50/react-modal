@@ -13,7 +13,7 @@ import { useModals } from '@mattjennings/react-modal-stack'
 export default {
   title: 'Stack',
   decorators: [
-    Story => (
+    (Story) => (
       <AnimatedModalStack>
         <Story />
       </AnimatedModalStack>
@@ -27,7 +27,7 @@ export const Basic = () => {
   function MyModal({
     modalNumber = 1,
     ...props
-  }: ModalProps & { modalNumber: number }) {
+  }) {
     const { openModal, stack } = useModals()
 
     return (
@@ -69,7 +69,7 @@ export const SkipAnimations = () => {
     message,
     canOpen = true,
     ...props
-  }: ModalProps & { message: string; canOpen?: boolean }) {
+  }) {
     const { openModal } = useModals()
 
     return (

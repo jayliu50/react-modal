@@ -1,5 +1,4 @@
 import { useModals } from '@mattjennings/react-modal-stack'
-// @ts-ignore
 import { useResponsiveValue } from '@theme-ui/match-media'
 import { AnimatePresence, motion, Variant } from 'framer-motion'
 import { ModalContextValue, ModalContext } from './ModalContext'
@@ -141,7 +140,7 @@ export default function Modal({
 
   return (
     <ModalContext.Provider value={contextValue}>
-      <AnimatePresence custom={{ skip: skipAnimations }}>
+      <AnimatePresence {...({ custom: { skip: skipAnimations } } as any)}>
         {open && (
           <TouchScrollable>
             <Box
