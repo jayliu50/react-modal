@@ -10,7 +10,7 @@ import {
 import { Text, Button } from 'theme-ui'
 import { useModals } from '@mattjennings/react-modal-stack'
 
-const meta = {
+export default {
   title: 'Stack',
   decorators: [
     (Story) => (
@@ -21,107 +21,101 @@ const meta = {
   ],
 }
 
-export default meta
+export const Basic = () => {
+  const { openModal } = useModals()
 
-export const Basic = {
-  render: () => {
+  function MyModal({
+    modalNumber = 1,
+    ...props
+  }) {
+    const { openModal, stack } = useModals()
+
+    return (
+      <Modal {...props}>
+        <ModalTitle>
+          <Text
+            sx={{
+              fontSize: 2,
+              fontWeight: 'medium',
+            }}
+          >
+            Welcome!
+          </Text>
+        </ModalTitle>
+        <ModalContent>
+          <Text>This is modal #{modalNumber}</Text>
+        </ModalContent>
+        <ModalFooter>
+          <Button
+            variant="pill"
+            onClick={() =>
+              openModal(MyModal, { modalNumber: stack.length + 1 })
+            }
+          >
+            Open Another
+          </Button>
+        </ModalFooter>
+      </Modal>
+    )
+  }
+
+  return <Button onClick={() => openModal(MyModal)}>open</Button>
+}
+
+export const SkipAnimations = () => {
+  const { openModal } = useModals()
+
+  function MyModal({
+    message,
+    canOpen = true,
+    ...props
+  }) {
     const { openModal } = useModals()
 
-    function MyModal({
-      modalNumber = 1,
-      ...props
-    }) {
-      const { openModal, stack } = useModals()
-
-      return (
-        <Modal {...props}>
-          <ModalTitle>
-            <Text
-              sx={{
-                fontSize: 2,
-                fontWeight: 'medium',
-              }}
-            >
-              Welcome!
-            </Text>
-          </ModalTitle>
-          <ModalContent>
-            <Text>This is modal #{modalNumber}</Text>
-          </ModalContent>
-          <ModalFooter>
+    return (
+      <Modal {...props} closeOnOutsideClick={false}>
+        <ModalTitle>
+          <Text
+            sx={{
+              fontSize: 2,
+              fontWeight: 'medium',
+            }}
+          >
+            Welcome!
+          </Text>
+        </ModalTitle>
+        <ModalContent sx={{ width: 300 }}>
+          <Text>{message}</Text>
+        </ModalContent>
+        <ModalFooter>
+          {canOpen && (
             <Button
               variant="pill"
               onClick={() =>
-                openModal(MyModal, { modalNumber: stack.length + 1 })
+                openModal(MyModal, {
+                  skipAnimations: true,
+                  message: 'This modal will not animate',
+                  canOpen: false,
+                })
               }
             >
               Open Another
             </Button>
-          </ModalFooter>
-        </Modal>
-      )
-    }
-
-    return <Button onClick={() => openModal(MyModal)}>open</Button>
-  }
-}
-
-export const SkipAnimations = {
-  render: () => {
-    const { openModal } = useModals()
-
-    function MyModal({
-      message,
-      canOpen = true,
-      ...props
-    }) {
-      const { openModal } = useModals()
-
-      return (
-        <Modal {...props} closeOnOutsideClick={false}>
-          <ModalTitle>
-            <Text
-              sx={{
-                fontSize: 2,
-                fontWeight: 'medium',
-              }}
-            >
-              Welcome!
-            </Text>
-          </ModalTitle>
-          <ModalContent sx={{ width: 300 }}>
-            <Text>{message}</Text>
-          </ModalContent>
-          <ModalFooter>
-            {canOpen && (
-              <Button
-                variant="pill"
-                onClick={() =>
-                  openModal(MyModal, {
-                    skipAnimations: true,
-                    message: 'This modal will not animate',
-                    canOpen: false,
-                  })
-                }
-              >
-                Open Another
-              </Button>
-            )}
-          </ModalFooter>
-        </Modal>
-      )
-    }
-    return (
-      <Button
-        onClick={() =>
-          openModal(MyModal, {
-            message:
-              'The next modal will not have animations, but this one will still animate when it is closed.',
-          })
-        }
-      >
-        open
-      </Button>
+          )}
+        </ModalFooter>
+      </Modal>
     )
   }
+  return (
+    <Button
+      onClick={() =>
+        openModal(MyModal, {
+          message:
+            'The next modal will not have animations, but this one will still animate when it is closed.',
+        })
+      }
+    >
+      open
+    </Button>
+  )
 }
