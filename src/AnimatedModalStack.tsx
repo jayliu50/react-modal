@@ -51,7 +51,11 @@ function AnimatedModals({ stack, closeModal }: ModalStackValue) {
 
   return (
     <>
-      <AnimatePresence>{stack.length > 0 && <Backdrop />}</AnimatePresence>
+      {stack.length > 0 && (
+        <AnimatePresence {...({} as any)}>
+          <Backdrop />
+        </AnimatePresence>
+      )}
       {displayedStack.map((modal, index) => {
         const open = index === displayedStack.length - 1 && isOpen
 
