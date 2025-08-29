@@ -5,13 +5,98 @@ import { Text, Button } from 'theme-ui'
 export default {
   title: 'Modal',
   component: Modal,
+  parameters: {
+    layout: 'centered',
+  },
+}
+
+// Define play functions using @storybook/test utilities
+const testBasicFunctionality = async (context) => {
+  if (typeof window !== 'undefined' && window.TestUtils) {
+    const { expect, userEvent, within } = window.TestUtils
+    const canvas = within(context.canvasElement)
+    
+    // Find and click the open button
+    const openButton = canvas.getByTestId('open-button')
+    await userEvent.click(openButton)
+    
+    // Wait for modal to appear and check content
+    await expect(canvas.getByText('Welcome!')).toBeInTheDocument()
+    await expect(canvas.getByText('This is the modal example')).toBeInTheDocument()
+    
+    // Test closing the modal
+    const closeButton = canvas.getByTestId('close-button')
+    await userEvent.click(closeButton)
+  }
+}
+
+const testCustomAnimation = async (context) => {
+  if (typeof window !== 'undefined' && window.TestUtils) {
+    const { expect, userEvent, within } = window.TestUtils
+    const canvas = within(context.canvasElement)
+    
+    // Open modal with custom animations
+    const openButton = canvas.getByTestId('open-button')
+    await userEvent.click(openButton)
+    
+    // Check modal appears with custom animation
+    await expect(canvas.getByText('Welcome!')).toBeInTheDocument()
+    
+    // Close modal
+    const closeButton = canvas.getByTestId('close-button')
+    await userEvent.click(closeButton)
+  }
+}
+
+const testScrollingFunctionality = async (context) => {
+  if (typeof window !== 'undefined' && window.TestUtils) {
+    const { expect, userEvent, within } = window.TestUtils
+    const canvas = within(context.canvasElement)
+    
+    // Open modal
+    const openButton = canvas.getByTestId('open-button')
+    await userEvent.click(openButton)
+    
+    // Check modal appears with long content
+    await expect(canvas.getByText('Welcome!')).toBeInTheDocument()
+    await expect(canvas.getByText(/Lorem ipsum dolor sit amet/)).toBeInTheDocument()
+    
+    // Close modal
+    const closeButton = canvas.getByTestId('close-button')
+    await userEvent.click(closeButton)
+  }
+}
+
+const testESCKeyDisabled = async (context) => {
+  if (typeof window !== 'undefined' && window.TestUtils) {
+    const { expect, userEvent, within } = window.TestUtils
+    const canvas = within(context.canvasElement)
+    
+    // Open modal
+    const openButton = canvas.getByTestId('open-button')
+    await userEvent.click(openButton)
+    
+    // Check modal appears
+    await expect(canvas.getByText('Welcome!')).toBeInTheDocument()
+    await expect(canvas.getByText('Try pressing ESC. Modal will ignore.')).toBeInTheDocument()
+    
+    // Test ESC key (modal should remain open)
+    await userEvent.keyboard('{Escape}')
+    
+    // Modal should still be visible
+    await expect(canvas.getByText('Welcome!')).toBeInTheDocument()
+    
+    // Close modal using button instead
+    const closeButton = canvas.getByTestId('close-button')
+    await userEvent.click(closeButton)
+  }
 }
 
 export const Basic = () => {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   return (
     <div>
-      <Button onClick={() => setOpen(true)}>open</Button>
+      <Button data-testid="open-button" onClick={() => setOpen(true)}>open</Button>
       <Modal open={open} onClose={() => setOpen(false)}>
         {({ onClose }) => (
           <div>
@@ -29,7 +114,7 @@ export const Basic = () => {
               <Text>This is the modal example</Text>
             </ModalContent>
             <ModalFooter>
-              <Button variant="pill" onClick={onClose}>
+              <Button data-testid="close-button" variant="pill" onClick={onClose}>
                 OK
               </Button>
             </ModalFooter>
@@ -40,11 +125,14 @@ export const Basic = () => {
   )
 }
 
+// Add play property for automated testing
+Basic.play = testBasicFunctionality
+
 export const CustomAnimation = () => {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   return (
     <div>
-      <Button onClick={() => setOpen(true)}>open</Button>
+      <Button data-testid="open-button" onClick={() => setOpen(true)}>open</Button>
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -91,7 +179,7 @@ export const CustomAnimation = () => {
               <Text>This is the modal example</Text>
             </ModalContent>
             <ModalFooter>
-              <Button variant="pill" onClick={onClose}>
+              <Button data-testid="close-button" variant="pill" onClick={onClose}>
                 OK
               </Button>
             </ModalFooter>
@@ -102,11 +190,13 @@ export const CustomAnimation = () => {
   )
 }
 
+CustomAnimation.play = testCustomAnimation
+
 export const Scrolling = () => {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   return (
     <div>
-      <Button onClick={() => setOpen(true)}>open</Button>
+      <Button data-testid="open-button" onClick={() => setOpen(true)}>open</Button>
       <Modal open={open} onClose={() => setOpen(false)}>
         {({ onClose }) => (
           <div>
@@ -169,7 +259,7 @@ export const Scrolling = () => {
               </Text>
             </ModalContent>
             <ModalFooter>
-              <Button variant="pill" onClick={onClose}>
+              <Button data-testid="close-button" variant="pill" onClick={onClose}>
                 OK
               </Button>
             </ModalFooter>
@@ -180,11 +270,13 @@ export const Scrolling = () => {
   )
 }
 
+Scrolling.play = testScrollingFunctionality
+
 export const ESCTurnedOff = () => {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   return (
     <div>
-      <Button onClick={() => setOpen(true)}>open</Button>
+      <Button data-testid="open-button" onClick={() => setOpen(true)}>open</Button>
       <Modal open={open} allowEscKey={false} onClose={() => setOpen(false)}>
         {({ onClose }) => (
           <div>
@@ -202,7 +294,7 @@ export const ESCTurnedOff = () => {
               <Text>Try pressing ESC. Modal will ignore.</Text>
             </ModalContent>
             <ModalFooter>
-              <Button variant="pill" onClick={onClose}>
+              <Button data-testid="close-button" variant="pill" onClick={onClose}>
                 OK
               </Button>
             </ModalFooter>
@@ -212,3 +304,5 @@ export const ESCTurnedOff = () => {
     </div>
   )
 }
+
+ESCTurnedOff.play = testESCKeyDisabled
