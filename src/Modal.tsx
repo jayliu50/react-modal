@@ -3,8 +3,7 @@ import { useResponsiveValue } from '@theme-ui/match-media'
 import { AnimatePresence, motion, Variant } from 'framer-motion'
 import { ModalContextValue, ModalContext } from './ModalContext'
 import React, { useEffect, useMemo } from 'react'
-// @ts-ignore
-import { TouchScrollable } from 'react-scrolllock'
+import { RemoveScroll } from 'react-remove-scroll'
 import { Box, BoxProps } from 'theme-ui'
 import Backdrop from './Backdrop'
 
@@ -142,7 +141,7 @@ export default function Modal({
     <ModalContext.Provider value={contextValue}>
       <AnimatePresence {...({ custom: { skip: skipAnimations } } as any)}>
         {open && (
-          <TouchScrollable>
+          <RemoveScroll>
             <Box
               sx={{
                 zIndex: `modal`,
@@ -181,7 +180,7 @@ export default function Modal({
                   : children}
               </MotionBox>
             </Box>
-          </TouchScrollable>
+          </RemoveScroll>
         )}
       </AnimatePresence>
     </ModalContext.Provider>

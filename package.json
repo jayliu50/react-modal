@@ -65,6 +65,6 @@
   },
   "dependencies": {
     "@theme-ui/match-media": "^0.17.2",
-    "react-scrolllock": "^5.0.1"
+    "react-remove-scroll": "^2.7.1"
   }
 }
