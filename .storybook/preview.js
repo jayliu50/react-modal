@@ -1,11 +1,11 @@
 import React from 'react'
-import { ThemeUIProvider, Box } from 'theme-ui'
+import { ThemeProvider, Box } from 'theme-ui'
 import theme from './theme'
 
 const preview = {
   decorators: [
     (Story) => (
-      <ThemeUIProvider theme={theme}>
+      <ThemeProvider theme={theme}>
         <Box
           sx={{
             minHeight: '75vh',
@@ -16,7 +16,7 @@ const preview = {
         >
           <Story />
         </Box>
-      </ThemeUIProvider>
+      </ThemeProvider>
     ),
   ],
   parameters: {
