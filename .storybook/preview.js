@@ -38,21 +38,19 @@ if (typeof window !== 'undefined') {
 
 const preview = {
   decorators: [
-    (Story) => React.createElement(
-      ThemeProvider,
-      { theme: theme },
-      React.createElement(
-        Box,
-        {
-          sx: {
+    (Story) => (
+      <ThemeProvider theme={theme}>
+        <Box
+          sx={{
             minHeight: '75vh',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-          }
-        },
-        React.createElement(Story)
-      )
+          }}
+        >
+          <Story />
+        </Box>
+      </ThemeProvider>
     ),
   ],
   parameters: {

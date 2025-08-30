@@ -26,8 +26,25 @@ const config = {
           options: {
             transpileOnly: true,
             compilerOptions: {
-              jsx: 'react-jsx'
+              jsx: 'react'
             }
+          }
+        }
+      ]
+    });
+    
+    // Handle JSX in .js files
+    config.module.rules.push({
+      test: /\.jsx?$/,
+      exclude: /node_modules/,
+      use: [
+        {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              '@babel/preset-env',
+              ['@babel/preset-react', { runtime: 'classic' }]
+            ]
           }
         }
       ]

@@ -2,8 +2,12 @@ import React, { useState } from 'react'
 import { Text, Button } from 'theme-ui'
 import { expect, userEvent, within } from '@storybook/test'
 
-// Import the built module components
-const { Modal, ModalTitle, ModalContent, ModalFooter } = require('../dist/index.js')
+import {
+  Modal,
+  ModalTitle,
+  ModalContent,
+  ModalFooter,
+} from '../src'
 
 const meta = {
   title: 'Modal',

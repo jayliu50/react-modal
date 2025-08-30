@@ -2,17 +2,14 @@ import React, { useState } from 'react'
 import { Text, Button } from 'theme-ui'
 import { expect, userEvent, within } from '@storybook/test'
 
-// Import the built module components
-const { 
-  Modal, 
-  ModalTitle, 
-  ModalContent, 
-  ModalFooter, 
-  AnimatedModalStack 
-} = require('../dist/index.js')
-
-// Import modal stack hooks
-const { useModals } = require('@mattjennings/react-modal-stack')
+import {
+  Modal,
+  ModalTitle,
+  ModalContent,
+  ModalFooter,
+  AnimatedModalStack,
+} from '../src'
+import { useModals } from '@mattjennings/react-modal-stack'
 
 const meta = {
   title: 'Stack',
