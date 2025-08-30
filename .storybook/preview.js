@@ -1,6 +1,29 @@
 import React from 'react'
 import { ThemeProvider, Box } from 'theme-ui'
-import theme from './theme'
+
+// Simple theme instead of importing from problematic files
+const theme = {
+  fonts: {
+    body: 'system-ui, sans-serif',
+    heading: 'system-ui, sans-serif',
+  },
+  colors: {
+    text: '#000',
+    background: '#fff',
+    primary: '#007acc',
+  },
+  buttons: {
+    primary: {
+      color: 'white',
+      bg: 'primary',
+    },
+    pill: {
+      color: 'white',
+      bg: 'primary',
+      borderRadius: '100px',
+    },
+  },
+}
 
 // Make test utilities available globally for play functions
 if (typeof window !== 'undefined') {
@@ -15,19 +38,21 @@ if (typeof window !== 'undefined') {
 
 const preview = {
   decorators: [
-    (Story) => (
-      <ThemeProvider theme={theme}>
-        <Box
-          sx={{
+    (Story) => React.createElement(
+      ThemeProvider,
+      { theme: theme },
+      React.createElement(
+        Box,
+        {
+          sx: {
             minHeight: '75vh',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-          }}
-        >
-          <Story />
-        </Box>
-      </ThemeProvider>
+          }
+        },
+        React.createElement(Story)
+      )
     ),
   ],
   parameters: {

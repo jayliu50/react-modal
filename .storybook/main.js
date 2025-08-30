@@ -9,6 +9,7 @@ const config = {
   },
   docs: {},
   typescript: {
+    check: false,
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
       shouldExtractLiteralValuesFromEnum: true,
