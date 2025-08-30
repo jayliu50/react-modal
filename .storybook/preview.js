@@ -1,5 +1,5 @@
 import React from 'react'
-import { ThemeProvider, Box } from 'theme-ui'
+import { ThemeUIProvider, Box } from 'theme-ui'
 
 // Simple theme instead of importing from problematic files
 const theme = {
@@ -28,7 +28,7 @@ const theme = {
 // Make test utilities available globally for play functions
 if (typeof window !== 'undefined') {
   // Dynamically import test utilities when needed
-  import('@storybook/test').then(({ expect, userEvent, within }) => {
+  import('storybook/test').then(({ expect, userEvent, within }) => {
     window.TestUtils = { expect, userEvent, within }
   }).catch(() => {
     // Test utilities not available, that's OK
@@ -38,21 +38,19 @@ if (typeof window !== 'undefined') {
 
 const preview = {
   decorators: [
-    (Story) => React.createElement(
-      ThemeProvider,
-      { theme: theme },
-      React.createElement(
-        Box,
-        {
-          sx: {
+    (Story) => (
+      <ThemeUIProvider theme={theme}>
+        <Box
+          sx={{
             minHeight: '75vh',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-          }
-        },
-        React.createElement(Story)
-      )
+          }}
+        >
+          <Story />
+        </Box>
+      </ThemeUIProvider>
     ),
   ],
   parameters: {
